@@ -1,4 +1,4 @@
-production:
+defaults: &defaults
   # sites hosts
   # session expire seconds
   # admin role account
@@ -72,3 +72,14 @@ production:
   # --------------------------------------------------------------
   # Do you want chat feature in your exchange ?
   # send mail to community@peatio.com
+
+
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

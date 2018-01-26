@@ -1,4 +1,4 @@
-production:
+production: &defaults
   adapter: mysql2
   encoding: utf8
   host: <%= ENV['DBMASTER_PORT_3306_TCP_ADDR'] %>
@@ -7,3 +7,12 @@ production:
   password: <%= ENV['DBMASTER_ENV_MYSQL_PASSWORD'] %>
   pool: 10
   reconnect: true
+
+
+test:
+  <<: *defaults
+  database: peatio_test
+
+development:
+  <<: *defaults
+  database: peatio_development

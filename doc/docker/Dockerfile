@@ -10,14 +10,14 @@ CMD ["/sbin/my_init"]
 RUN apt update
 RUN apt-get -y install imagemagick gsfonts
 
-ADD peatio /home/app/peatio
-RUN chown -R app:app /home/app/peatio
+#ADD peatio /home/app/peatio
+#RUN chown -R app:app /home/app/peatio
 
 USER app
 ENV HOME /home/app
 
 WORKDIR /home/app/peatio
-RUN bundle install --without development test --path vendor/bundle
+#RUN bundle install --without development test --path vendor/bundle
 
 # RUN ./bin/init_config
 ADD conf/rails-amqp.yml /home/app/peatio/config/amqp.yml

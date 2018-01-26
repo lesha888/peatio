@@ -1,0 +1,49 @@
+version: '2.1'
+services:
+
+  redis:
+    image: redis
+    container_name: redis
+    volumes:
+    - ./docker/volumes/redis/data:/data
+    env_file:
+    - .env
+
+  rabbitmq:
+    image: rabbitmq
+    container_name: rabbitmq
+    env_file:
+    - .env
+
+  webapp:
+    build: ./doc/docker/
+    container_name: webapp
+    volumes:
+    - ./:/home/app/peatio
+    - ./doc/docker/conf/nginx-peatio-env.conf:/etc/nginx/main.d/peatio-env.conf
+    - ./doc/docker/conf/nginx-peatio-with-ssl.conf:/etc/nginx/sites-available/peatio
+    - ./doc/docker/conf/ssl_keys/server.crt:/etc/nginx/ssl_keys/server.crt
+    - ./doc/docker/conf/ssl_keys/server.key:/etc/nginx/ssl_keys/server.key
+    ports:
+    - 80:80 
+    - 18080:18080 
+    - 443:443 
+    links:
+    - rabbitmq:rabbitmq
+    - redis:redis
+    - dbmaster:dbmaster
+    env_file:
+    - .env
+
+  dbmaster:
+    image: mysql:5.6
+    container_name: dbmaster  
+    ports:
+    - 3306:3306 
+    volumes:
+    - ./docker/volumes/dbdata:/var/lib/mysql
+    env_file:
+    - .env
+   
+
+

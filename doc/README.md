@@ -9,6 +9,17 @@ docker build -t peatio/base .
 ./bin/webapp.sh
 ```
 
+Init app 
+```
+docker-compose up -d
+docker-compose exec webapp  bash -c 'RAILS_ENV=production; bundle install --with development test --path vendor/bundle &&  ./bin/rake db:migrate && ./bin/rake assets:precompile;'
+```
+
+Normal start
+```
+docker-compose exec webapp  bash -c 'RAILS_ENV=production; ./bin/rake assets:precompile;'
+```
+
 Operating Systems
 -----------------
 
